@@ -39,4 +39,15 @@ $\lim_{n \to \infty} P(X = k) = \frac{\lambda^k}{k!}e^{-\lambda}$
 
 This is the Poisson distribution with parameter $\lambda$, which gives the probability of k events occurring in a fixed interval when the average rate is $\lambda$.
 
+When data follows a binomial distribution with large $n$ (number of trials) and small $p$ (probability of success), Poisson(np) is a good approximation of Binomial(n, p).
+
+Another interpretation of the Poisson random variable is in terms of a random process called the Poisson process. This is defined as a process where events can occur at any time in continuous time, with an average rate given by the parameter $\lambda$ and satisfying the following conditions:
+
+- Events occur independently of each other
+- The probability that an event occurs in a given length of time is contanst.
+
+
+
+
+
 
