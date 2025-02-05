@@ -1,5 +1,6 @@
 import numpy as np
 from stats.descriptive import Descriptive
+from stats.regression import Regression
 
 """
 The -axis is the apparent velocity, measured in kilometers per second.
@@ -27,11 +28,15 @@ def calculate_sample_statistic(data):
 x_stats = Descriptive(x_array)
 y_stats = Descriptive(y_array)
 
-print(x_stats.maximum_covariance_with(y_stats))
-print(x_stats.correlation_with(y_stats))
+# print(x_stats.maximum_covariance_with(y_stats))
+# print(x_stats.correlation_with(y_stats))
 
-correlation_coefficient = x_stats.correlation_coefficient_with(y_stats)
-print(f"Correlation Coefficient: {correlation_coefficient}")
+# correlation_coefficient = x_stats.correlation_coefficient_with(y_stats)
+# print(f"Correlation Coefficient: {correlation_coefficient}")
 
-slope = x_stats.slope_with(y_stats)
-print(f"slope is {slope}")
+# slope = x_stats.slope_with(y_stats)
+# print(f"slope is {slope}")
+
+reg_stats = Regression(x_array, y_array)
+slope = reg_stats.slope()
+print(f"Slope is: {slope}")

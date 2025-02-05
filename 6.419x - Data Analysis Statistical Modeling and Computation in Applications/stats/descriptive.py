@@ -61,6 +61,3 @@ class Descriptive:
     def correlation_coefficient_with(self, other: 'Descriptive') -> float:
         # between -1 and 1. The covariance is scaled by it's maximum value
         return self.covariance_with(other) / self.maximum_covariance_with(other)
-
-    def slope_with(self, other: 'Descriptive') -> float:
-        return self.correlation_coefficient_with(other) * (other.std()/self.std())
