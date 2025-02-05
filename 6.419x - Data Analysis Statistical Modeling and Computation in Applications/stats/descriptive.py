@@ -1,7 +1,10 @@
 import numpy as np
 from typing import Union, List, Optional
+from .data import StatisticalData
 
 class Descriptive:
+    """Class for univariate descriptive statistics."""
+
     def __init__(self, data: Union[List, np.ndarray]):
         """
         Initialize statistical calculations with data.
@@ -9,10 +12,13 @@ class Descriptive:
         Args:
             data: Input data as list or numpy array
         """
-        self.data = np.array(data) if not isinstance(data, np.ndarray) else data
-        # Cache for computed values
+        self._statistical_data = StatisticalData(data)
         self._mean: Optional[float] = None
         self._std: Optional[float] = None
+
+    @property
+    def data(self) -> np.ndarray:
+        return self._statistical_data.data
 
     def mean(self) -> float:
         """Calculate and cache mean of the data."""
@@ -55,6 +61,3 @@ class Descriptive:
     def correlation_coefficient_with(self, other: 'Descriptive') -> float:
         # between -1 and 1. The covariance is scaled by it's maximum value
         return self.covariance_with(other) / self.maximum_covariance_with(other)
-
-    def slope_with(self, other: 'Descriptive') -> float:
-        return self.correlation_coefficient_with(other) * (other.std()/self.std())

@@ -112,3 +112,11 @@ Linear regression is a fundamental statistical method that models the relationsh
 5. Consider non-linear models when appropriate
 
 Remember: Linear regression is powerful but not universal. The method's simplicity makes it attractive, but its assumptions must be respected for valid results.
+
+### Summary From Lecture
+A regression line:
+- interpolates conditional averages of y given x
+- solves lease squares problem
+- slope: r * (Sy/Sx)
+- caution: linear relationship does not imply causaility
+- caution: ecological correlations - correlations observed at group/aggregate level may not hold for individuals. For example, countries with higher average income may have lower life satisfaction, even though wealthier individuals tend to be more satisfied.
