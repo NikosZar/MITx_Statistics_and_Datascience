@@ -43,4 +43,33 @@ class Regression:
         return self._slope
 
     def intercept(self) -> float:
-        pass
+        # y_mean - slope*x_mean
+        if self._intercept is None:
+            x_stats = Descriptive(self._bivariate_data.x.data)
+            y_stats = Descriptive(self._bivariate_data.y.data)
+
+            x_mean = x_stats.mean()
+            y_mean = y_stats.mean()
+
+            self._intercept = y_mean - (self.slope() * x_mean)
+
+        return self._intercept
+
+    def r_squared(self) -> float:
+        """
+        Calculate and cache the coefficient of determination (R²).
+
+        In simple linear regression, R² equals the square of
+        the correlation coefficient.
+
+        Returns:
+            float: R² value between 0 and 1
+        """
+        if self._r_squared is None:
+            x_stats = Descriptive(self._bivariate_data.x.data)
+            y_stats = Descriptive(self._bivariate_data.y.data)
+
+            correlation = x_stats.correlation_coefficient_with(y_stats)
+            self._r_squared = correlation ** 2
+
+        return self._r_squared

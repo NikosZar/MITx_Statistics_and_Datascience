@@ -40,3 +40,6 @@ y_stats = Descriptive(y_array)
 reg_stats = Regression(x_array, y_array)
 slope = reg_stats.slope()
 print(f"Slope is: {slope}")
+
+intercept = reg_stats.intercept()
+print(f"intercept is: {intercept}")
