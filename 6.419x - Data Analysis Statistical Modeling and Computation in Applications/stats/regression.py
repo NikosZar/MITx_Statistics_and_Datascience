@@ -19,15 +19,15 @@ class Regression:
         self._bivariate_data = BivariateSample(x, y)
         self._slope: Optional[float] = None
         self._intercept: Optional[float] = None
-        self._r_quared: Optional[float] = None
+        self._r_squared: Optional[float] = None
 
-        @property
-        def x(self) -> np.ndarray:
-            return self._bivariate_data.x.data
+    @property
+    def x(self) -> np.ndarray:
+        return self._bivariate_data.x.data
 
-        @property
-        def y(self) -> np.ndarray:
-            return self._bivariate_data.y.data
+    @property
+    def y(self) -> np.ndarray:
+        return self._bivariate_data.y.data
 
     def slope(self) -> float:
         """
@@ -73,3 +73,18 @@ class Regression:
             self._r_squared = correlation ** 2
 
         return self._r_squared
+
+    def predict(self, x_values: Union[float, List, np.ndarray]) -> np.ndarray:
+        """Make predictions using the regression line."""
+        x_arr = np.array(x_values)
+        return self.intercept() + self.slope() * x_arr
+
+    def residuals(self) -> np.ndarray:
+        """
+        Calculate residuals (observed - predicted values).
+
+        Returns:
+            np.ndarray: Array of residuals (y - ŷ)
+        """
+        y_predicted = self.predict(self.x)
+        return self.y - y_predicted
