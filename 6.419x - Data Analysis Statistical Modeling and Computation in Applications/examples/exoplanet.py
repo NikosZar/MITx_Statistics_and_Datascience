@@ -1,5 +1,34 @@
-import numpy as np
+"""
+Exoplanet Analysis using Multiple Linear Regression
+------------------------------------------------
 
+This script analyzes the relationships between various exoplanet characteristics
+using multiple linear regression. The goal is to understand how different
+planetary and stellar properties correlate with a planet's mass.
+
+Features analyzed:
+- Planet radius
+- Orbital period
+- Star metallicity
+- Star mass
+- Star age
+
+All continuous variables are log-transformed to handle non-linear relationships
+and different scales of measurement.
+
+"""
+
+import numpy as np
+from stats.descriptive import Descriptive
+from stats.regression import Regression
+from stats.multiple_regression import MultipleRegression
+import matplotlib.pyplot as plt
+
+# Load and prepare the data
+# ------------------------
+# All continuous variables are log-transformed to linearize relationships
+
+# Target variable: Planet mass (log scale)
 LogPlanetMass = np.array([-0.31471074,  1.01160091,  0.58778666,  0.46373402, -0.01005034,
          0.66577598, -1.30933332, -0.37106368, -0.40047757, -0.27443685,
          1.30833282, -0.46840491, -1.91054301,  0.16551444,  0.78845736,
@@ -7,6 +36,7 @@ LogPlanetMass = np.array([-0.31471074,  1.01160091,  0.58778666,  0.46373402, -0
         -4.98204784, -0.48776035, -1.69298258, -0.08664781, -2.28278247,
          3.30431931, -3.27016912,  1.14644962, -3.10109279, -0.61248928])
 
+# Predictor variables
 LogPlanetRadius = np.array([ 0.32497786,  0.34712953,  0.14842001,  0.45742485,  0.1889661 ,
          0.06952606,  0.07696104,  0.3220835 ,  0.42918163, -0.05762911,
          0.40546511,  0.19227189, -0.16251893,  0.45107562,  0.3825376 ,
@@ -40,4 +70,47 @@ LogStarAge = np.array([ 1.58103844,  1.06471074,  2.39789527,  0.72754861,  0.55
          1.84054963,  2.19722458,  1.89761986,  1.84054963,  0.74193734,
          0.55961579,  1.79175947,  0.91629073,  2.17475172,  1.36097655])
 
-n = 30
+# Prepare data for multiple regression
+# ----------------------------------
+n_samples = 30
+feature_names = ['Intercept', 'Planet Radius', 'Orbital Period',
+                'Star Metallicity', 'Star Mass', 'Star Age']
+
+x = np.column_stack([LogPlanetRadius, LogPlanetOrbit, StarMetallicity,
+                    LogStarMass, LogStarAge])
+y = LogPlanetMass
+
+# Fit multiple regression model
+model = MultipleRegression(x, y)
+coefficients = model.least_squares_estimator()
+errors = model.standard_errors()
+
+
+# Print results with interpretation
+feature_names = ['Intercept', 'LogPlanetRadius', 'LogPlanetOrbit',
+                'StarMetallicity', 'LogStarMass', 'LogStarAge']
+
+print("\nMultiple Regression Results:")
+print("-" * 70)
+print(f"{'Variable':15} {'Coefficient':>10} {'Std Error':>10} {'t-value':>10} {'Reject H₀':>10}")
+print("-" * 70)
+
+for name, coef, err in zip(feature_names, coefficients, errors):
+    t_value = coef / err
+    reject_null = 'Yes' if abs(t_value) > 2 else 'No'
+    print(f"{name:15} {coef:10.4f} {err:10.4f} {t_value:10.4f} {reject_null:>10}")
+
+print("-" * 70)
+print("Reject H₀: Evidence suggests this variable has a real relationship with planet mass")
+print("(at 5% significance level)")
+
+# Visualize results
+# ----------------
+# Create a bar plot of coefficient magnitudes to show relative importance
+# plt.figure(figsize=(10, 6))
+# plt.bar(feature_names[1:], np.abs(coefficients[1:]))
+# plt.title('Relative Importance of Features in Predicting Planet Mass')
+# plt.xticks(rotation=45)
+# plt.ylabel('|Coefficient Magnitude|')
+# plt.tight_layout()
+# plt.show()
