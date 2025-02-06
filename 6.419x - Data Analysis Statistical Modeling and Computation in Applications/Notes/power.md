@@ -4,6 +4,8 @@
 
 Statistical power is essentially our ability to detect a real effect when it exists. It's 1 - β, where β is the probability of a Type II error (failing to reject a false null hypothesis). I like to think of it as our "detection sensitivity."
 
+Another way of saying it is its the probability of rejecting the null hypothesis when the alternative hypothesis is true, i.e the probability of correctly rejecting the null hypothesis. Power = 1 - P(Type II error).
+
 ## The One-sided vs Two-sided Dilemma
 
 Here's what I've learned about the power differences between one-sided and two-sided tests:
