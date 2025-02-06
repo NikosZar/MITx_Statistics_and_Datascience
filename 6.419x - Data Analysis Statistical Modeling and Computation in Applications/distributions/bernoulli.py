@@ -17,7 +17,7 @@ class Bernoulli:
     events are independent and identically distributed (i.i.d)
     """
 
-    def __init__(self, p: float, n: int, k: int, pi_param:int = None):
+    def __init__(self, p: float, n: int, k: int, pi_param: int = None):
         # control for p
         if p < 0 or p > 1:
             raise ValueError("p must be between 0 and 1")
